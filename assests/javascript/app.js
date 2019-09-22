@@ -2,66 +2,121 @@
 
 $(document).ready(function () {
 
-    var searchString
-    var topics = ["tennis", "rugby", "croquet"];
+    //create array for initial themes
 
 
+    var topics = ["tennis", "rugby", "croquet"]
+   
+
+
+
+
+//Loops through array to make the buttons
+
+for(i=0;i<topics.length;i++)
+
+{
+$("#searchDiv").prepend("<button class='resultsButton' data-topic=" + topics[i] + ">" + topics[i] + "</button>")
+
+}
+//input text field for new buttons
+
+ $("button").on("click", function() {
+
+ 
+var searchString = $("#buttonSearch").val().trim();
+
+console.log("what is this new search string", searchString);
+
+//pushes search field input in to array
+
+topics.push(searchString);
+
+console.log("what is this", topics);
+
+$("#searchDiv").empty();
+$("#buttonSearch").empty();
+
+//Loops through array to make the buttons
+
+for(i=0;i<topics.length;i++)
+
+{
+$("#searchDiv").prepend("<button class='resultsButton' data-topic=" + topics[i] + ">" + topics[i] + "</button>")
+
+}
+
+
+
+
+
+
+ })
+
+
+
+$('.resultsButton').on('click', function() {
+
+    console.log("hello justin!");
+
+
+
+
+var searchString = $(this).attr("data-topic");
 
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchString + "&api_key=7ICApg1Tm6BdKtIJ7k5hHwUNzEhoH8JV";
 
+console.log("what is this", searchString);
 
-// for (var i = 0; i < topics.length; i++) {
-//     var topicButton = $("<p>").text(toDoItem);
+var resultsGIF = [];
 
-for(i=0;i<topics.length;i++)
-{
-   console.log(topics[i])
-}
+      // Constructing a URL to search Giphy for the name of the person who said the quote
+     
+
+      // Performing our AJAX GET request
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        // After the data comes back from the API
+        .then(function(response) {
+          // Storing an array of results in the results variable
+          var resultsGIF = response.data;
+
+          // Looping over every result item
+          for (var i = 0; i < resultsGIF.length; i++) {
+
+            // Only taking action if the photo has an appropriate rating
+            if (resultsGIF[i].rating !== "r" && resultsGIF[i].rating !== "pg-13") {
+              // Creating a div for the gif
+              var gifDiv = $("<div>");
+
+              // Storing the result item's rating
+              var rating = resultsGIF[i].rating;
+
+              // Creating a paragraph tag with the result item's rating
+              var p = $("<p>").text("Rating: " + rating);
+
+              // Creating an image tag
+              var gifImage = $("<img>");
+
+              // Giving the image tag an src attribute of a proprty pulled off the
+              // result item
+              gifImage.attr("src", resultsGIF[i].images.fixed_height.url);
+
+              // Appending the paragraph and personImage we created to the "gifDiv" div we created
+              gifDiv.append(p);
+              gifDiv.append(gifImage);
+
+              // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+              $("#resultsDiv").prepend(gifDiv);
+            }
+          }
+        
     
+    })
+
+    })
+
 });
 
-
-    // // var html = "";
-    // for (i = 0 ; i < 3 ; i++)
-    //     // html = "<button data-topic="topics[i]"> "topics[i]"</button>";
-    // $("#search-terms").prepend("<button data-topic="topics[i]"> "topics[i]"</button>");
-    // });
-
-// var topicButton = $("<p>").text("*" + toDoItem);
-
-
-
-// $("button").on("click", function() {
-
- 
-  
-//      var searchString = $("#button").val().trim();
-
-
-//      //ajax to use API URL and searchString concat
-//      $(ajax)
-    
-//      var newresult = $("<p>").text("*" + toDoItem);
-
-//      //then prepend (use <div> tag) result image url into results div and include rating
-     
-//      $("#to-do").attr("id", "item-" + toDoCount);
-//      
-
-
-
-
-// $(".gif").on("click", function() {
-//     // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-//     var state = $(this).attr("data-state");
-//     // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-//     // Then, set the image's data-state to animate
-//     // Else set src to the data-still value
-//     if (state === "still") {
-//       $(this).attr("src", $(this).attr("data-animate"));
-//       $(this).attr("data-state", "animate");
-//     } else {
-//       $(this).attr("src", $(this).attr("data-still"));
-//       $(this).attr("data-state", "still");
-//     }
-//   });
