@@ -121,7 +121,11 @@ $(document).ready(function() {
     
   });
 
-  $(".resultsButton").on("click", function() {
+//   $(".resultsButton").on("click", function() {
+
+    $(document).on('click', '.resultsButton', function(){ 
+        // Your Code
+//    });
 
 
     console.log("you just clicked a results button");
@@ -135,6 +139,8 @@ $(document).ready(function() {
       searchString +
       "&api_key=7ICApg1Tm6BdKtIJ7k5hHwUNzEhoH8JV";
 
+      console.log("queryURL",queryURL);
+
   
 
     
@@ -143,7 +149,7 @@ $(document).ready(function() {
 
 
 
-    // Performing our AJAX GET request
+    //  AJAX GET request
     $.ajax({
       url: queryURL,
       method: "GET"
