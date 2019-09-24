@@ -179,24 +179,7 @@ $(document).ready(function() {
  
   });
 
-  $(document).on('click', '.searchGIF', function(){
-
-    console.log("you clicked the button for animated gifs");
-    var state = $(this).attr('data-state');
-
-    console.log(state);
-
-    if(state == 'still'){
-
-        console.log("if statement started");
-        $(this).attr('src', $(this).data('animate'));
-        $(this).attr('data-state', 'animated');
-    } else{
-        $(this).attr('src', $(this).data('still'));
-        $(this).attr('data-state', 'still');
-    }
- })
-
+  
 //   $(document).on("click", ".gif", function() {
 //     console.log("you clicked the button for animated gifs");
 
@@ -207,4 +190,23 @@ $(document).ready(function() {
  
 //   });
 });
+
+$(document).on('click', '.searchGIF', function(){
+
+  console.log("you clicked the button for animated gifs");
+  var state = $(this).attr('data-state');
+
+  console.log(state);
+
+  if(state == 'still'){
+
+      console.log("if statement started");
+      $(this).attr('src', $(this).data('animate'));
+      $(this).attr('data-state', 'animated');
+  } else{
+      $(this).attr('src', $(this).data('still'));
+      $(this).attr('data-state', 'still');
+  }
+})
+
 });
